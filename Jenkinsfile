@@ -1,13 +1,20 @@
 pipeline {
-    agent any
+    agent {
+        docker {
+            image 'maven:3-alpine'
+            args '-v "%HOMEDRIVE%%HOMEPATH%"/.m2:/root/.m2'  
+        }
+    }
     stages {
-        stage('Hello') {
+        stage('Build') {
             steps {
-                echo 'Hello World'
+                bat 'mvn -B -DskipTests clean package'   
             }
         }
     }
 }
+
+
 
 
 
